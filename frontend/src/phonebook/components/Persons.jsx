@@ -1,10 +1,16 @@
-export default function Persons({ persons }) {
+export default function Persons({ persons, handleDelete }) {
   return (
     <>
       {persons.map((p) => (
-        <p key={p.id}>
+        <div key={p.id} className="my-1">
           {p.name} {p.number}
-        </p>
+          <button
+            className="bg-sky-500 hover:bg-sky-700 rounded-md p-1 mx-1"
+            onClick={() => handleDelete(p)}
+          >
+            delete
+          </button>
+        </div>
       ))}
     </>
   );

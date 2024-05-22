@@ -57,6 +57,16 @@ export default function Phonebook() {
     setFiltered(res);
   };
 
+  const handleDelete = (person) => {
+    if (window.confirm(`Delete ${person.name}`)) {
+      setPersons(
+        persons.filter((p) => {
+          return p.name !== person.name;
+        })
+      );
+    }
+  };
+
   return (
     <div>
       <h2 className="text-4xl">Phonebook</h2>
@@ -74,7 +84,10 @@ export default function Phonebook() {
       />
       <h2 className="text-3xl">Numbers</h2>
 
-      <Persons persons={filtered.length === 0 ? persons : filtered} />
+      <Persons
+        persons={filtered.length === 0 ? persons : filtered}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 }
