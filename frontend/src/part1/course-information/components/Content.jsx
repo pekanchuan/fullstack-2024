@@ -1,6 +1,8 @@
 import Part from "./Part";
 
-export default function Content({ parts }) {
+export default function Content({ course }) {
+  const { parts } = course;
+
   return (
     <>
       {parts.map((part) => (
