@@ -1,3 +1,7 @@
+import CourseInformation from "./part1/course-information/CourseInformation";
+import Unicafe from "./part1/unicafe/Unicafe";
+
 export default function App() {
-  return <h1 className="text-3xl font-bold underline">Hello, world!</h1>;
+  // return <CourseInformation />;
+  return <Unicafe />;
 }
