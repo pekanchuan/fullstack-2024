@@ -1,7 +1,7 @@
-export default function ({ part, exercises }) {
+export default function ({ part }) {
   return (
     <p>
-      {part} {exercises}
+      {part.name} {part.exercises}
     </p>
   );
 }
