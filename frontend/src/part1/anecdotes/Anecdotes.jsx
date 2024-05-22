@@ -24,6 +24,7 @@ export default function Anecdotes() {
 
   return (
     <div>
+      <h1 className="text-4xl">Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button
@@ -40,6 +41,9 @@ export default function Anecdotes() {
       >
         next anecdote
       </button>
+      <h1 className="text-4xl">Anecdote with most votes</h1>
+      <p>{anecdotes[votes.findIndex((v) => v === Math.max(...votes))]}</p>
+      <p>has {Math.max(...votes)} votes</p>
     </div>
   );
 }
