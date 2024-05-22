@@ -13,12 +13,27 @@ export default function Anecdotes() {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Array(8).fill(0));
+
+  const handleVotes = () => {
+    console.log("fooooo");
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  };
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
       <button
-        className="bg-zinc-600 text-white"
+        className="mx-1 px-1 bg-zinc-600 text-white rounded"
+        onClick={() => handleVotes()}
+      >
+        vote
+      </button>
+      <button
+        className="px-1 bg-zinc-600 text-white rounded"
         onClick={() =>
           setSelected(Math.floor(Math.random() * anecdotes.length))
         }
