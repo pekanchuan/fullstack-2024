@@ -2,10 +2,16 @@ import { useState } from "react";
 
 export default function Phonebook() {
   const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-1234567" },
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
+
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [filtered, setFiltered] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -32,9 +38,28 @@ export default function Phonebook() {
     setNewNumber("");
   };
 
+  const handleFiltered = (event) => {
+    const value = event.target.value;
+    setKeyword(value);
+    const res = persons.filter((p) =>
+      p.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFiltered(res);
+  };
+
   return (
     <div>
       <h2 className="text-3xl">Phonebook</h2>
+      <div>
+        filter shown with{" "}
+        <input
+          className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md sm:text-sm focus:ring-1"
+          onChange={handleFiltered}
+          value={keyword}
+        />
+      </div>
+      <h1 className="text-3xl">add new</h1>
       <form onSubmit={addPerson}>
         <div>
           name:{" "}
@@ -62,11 +87,17 @@ export default function Phonebook() {
         </div>
       </form>
       <h2 className="text-3xl">Numbers</h2>
-      {persons.map((p) => (
-        <p key={p.name}>
-          {p.name} {p.number}
-        </p>
-      ))}
+      {filtered.length === 0
+        ? persons.map((p) => (
+            <p key={p.name}>
+              {p.name} {p.number}
+            </p>
+          ))
+        : filtered.map((p) => (
+            <p key={p.name}>
+              {p.name} {p.number}
+            </p>
+          ))}
     </div>
   );
 }
