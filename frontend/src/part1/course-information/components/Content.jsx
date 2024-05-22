@@ -1,11 +1,11 @@
 import Part from "./Part";
 
-export default function Content({ part1, part2, part3 }) {
+export default function Content({ parts }) {
   return (
     <>
-      <Part part={part1} />
-      <Part part={part2} />
-      <Part part={part3} />
+      {parts.map((part) => (
+        <Part key={part.name} part={part} />
+      ))}
     </>
   );
 }
