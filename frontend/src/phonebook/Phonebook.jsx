@@ -10,11 +10,11 @@ const baseUrl = "http://localhost:3001/persons";
 
 export default function Phonebook() {
   const [persons, setPersons] = useState([]);
-
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [showSucceed, setShowSucceed] = useState(null);
 
   useEffect(() => {
     axios.get(baseUrl).then((res) => {
@@ -40,8 +40,6 @@ export default function Phonebook() {
       ) {
         const index = persons.findIndex((p) => p.name === newName);
         const changePerson = persons[index];
-        // console.log(changePerson);
-        // console.log({ ...changePerson, number: newNumber });
         updatePerson(changePerson.id, { ...changePerson, number: newNumber });
       }
       return;
@@ -54,6 +52,7 @@ export default function Phonebook() {
 
     axios.post(baseUrl, newPerson).then((res) => {
       setPersons([...persons, res.data]);
+      setShowSucceed(res.data);
       setNewName("");
       setNewNumber("");
     });
@@ -88,6 +87,14 @@ export default function Phonebook() {
   return (
     <div>
       <h2 className="text-4xl">Phonebook</h2>
+
+      {showSucceed ? (
+        <div className="bg-gray-200 border-green-600 border-4 text-green-600 p-1">
+          Added {showSucceed.name}
+        </div>
+      ) : (
+        <></>
+      )}
 
       <Filter keyword={keyword} handleFiltered={handleFiltered} />
 
