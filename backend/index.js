@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 let persons = [
@@ -25,6 +26,30 @@ let persons = [
 ];
 
 app.use(express.json());
+// app.use(morgan("tiny"));
+
+morgan.token("body", (req) => JSON.stringify(req.body));
+morgan.token("query", (req) => JSON.stringify(req.query));
+
+app.use(
+  morgan((tokens, req, res) => {
+    let logFormat = [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, "content-length"),
+      "-",
+      tokens["response-time"](req, res),
+      "ms",
+    ];
+
+    if (req.method === "POST" || req.method === "PUT") {
+      logFormat.push(tokens.body(req, res));
+    }
+
+    return logFormat.join(" ");
+  })
+);
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello world</h1>");
