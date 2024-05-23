@@ -6,6 +6,8 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 
+const baseUrl = "http://localhost:3001/persons";
+
 export default function Phonebook() {
   const [persons, setPersons] = useState([]);
 
@@ -15,7 +17,7 @@ export default function Phonebook() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((res) => {
+    axios.get(baseUrl).then((res) => {
       setPersons(res.data);
     });
   }, []);
@@ -31,7 +33,17 @@ export default function Phonebook() {
     event.preventDefault();
 
     if (persons.find((p) => p.name === newName)) {
-      alert(`${newName} is already added to Phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to Phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const index = persons.findIndex((p) => p.name === newName);
+        const changePerson = persons[index];
+        // console.log(changePerson);
+        // console.log({ ...changePerson, number: newNumber });
+        updatePerson(changePerson.id, { ...changePerson, number: newNumber });
+      }
       return;
     }
 
@@ -40,10 +52,16 @@ export default function Phonebook() {
       number: newNumber,
     };
 
-    axios.post("http://localhost:3001/persons", newPerson).then((res) => {
+    axios.post(baseUrl, newPerson).then((res) => {
       setPersons([...persons, res.data]);
       setNewName("");
       setNewNumber("");
+    });
+  };
+
+  const updatePerson = (id, person) => {
+    axios.put(`${baseUrl}/${id}`, person).then((res) => {
+      setPersons(persons.map((p) => (p.id === id ? res.data : p)));
     });
   };
 
