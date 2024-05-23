@@ -24,6 +24,8 @@ let persons = [
   },
 ];
 
+app.use(express.json());
+
 app.get("/", (request, response) => {
   response.send("<h1>Hello world</h1>");
 });
@@ -51,11 +53,25 @@ app.get("/api/persons/:id", (request, response) => {
 });
 
 app.delete("/api/persons/:id", (request, response) => {
-  console.log("==========");
   const id = Number(request.params.id);
   persons = persons.filter((p) => p.id !== id);
 
   response.status(204).end();
+});
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+  if (!body.name || !body.number) {
+    return response.status(400).json({ error: "Name or number is missing" });
+  }
+
+  const newPerson = {
+    id: Math.max(...persons.map((p) => p.id)) + 1,
+    name: body.name,
+    number: body.number,
+  };
+  persons = persons.concat(newPerson);
+  response.status(201).json(newPerson);
 });
 
 const PORT = 3001;
