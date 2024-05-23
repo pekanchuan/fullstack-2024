@@ -8,7 +8,7 @@ export default function Countries() {
   const [countries, setCountries] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [showHint, setShowHint] = useState(false);
+  const [showDetails, setShowDetails] = useState(null);
 
   useEffect(() => {
     getAll();
@@ -45,6 +45,11 @@ export default function Countries() {
     searchCountries(value);
   };
 
+  const handleShowDetails = (country) => {
+    console.log(country.name.common);
+    setShowDetails(country);
+  };
+
   return (
     <div className="m-2">
       <div>
@@ -65,7 +70,22 @@ export default function Countries() {
               <p>Too many countries, specify another filter</p>
             ) : (
               filtered.map((country) => (
-                <p key={country.area}>{country.name.common}</p>
+                <div key={country.area}>
+                  <p>
+                    {country.name.common}{" "}
+                    <button
+                      className="rounded-md bg-blue-600 text-white px-2 my-2"
+                      onClick={() => handleShowDetails(country)}
+                    >
+                      show
+                    </button>
+                  </p>
+                  <div>
+                    {showDetails.area === country.area && (
+                      <Country country={country} />
+                    )}
+                  </div>
+                </div>
               ))
             )}
           </div>

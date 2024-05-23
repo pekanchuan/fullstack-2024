@@ -19,7 +19,7 @@ export default function Country({ country }) {
           <li key={code}>{name}</li>
         ))}
       </ul>
-      <img src={svg} alt={alt} className="w-40 h-40 my-5" />
+      <img src={svg} alt={alt} className="w-40 h-40 my-5 object-contain" />
     </>
   );
 }
