@@ -15,6 +15,7 @@ export default function Phonebook() {
   const [filtered, setFiltered] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [showSucceed, setShowSucceed] = useState(null);
+  const [showError, setShowError] = useState(null);
 
   useEffect(() => {
     axios.get(baseUrl).then((res) => {
@@ -55,13 +56,22 @@ export default function Phonebook() {
       setShowSucceed(res.data);
       setNewName("");
       setNewNumber("");
+      setShowError(null);
     });
   };
 
   const updatePerson = (id, person) => {
-    axios.put(`${baseUrl}/${id}`, person).then((res) => {
-      setPersons(persons.map((p) => (p.id === id ? res.data : p)));
-    });
+    axios
+      .put(`${baseUrl}/${id}`, person)
+      .then((res) => {
+        setPersons(persons.map((p) => (p.id === id ? res.data : p)));
+        setShowError(null);
+      })
+      .catch((error) => {
+        console.error(error);
+        setShowError(person.name);
+        setShowSucceed(null);
+      });
   };
 
   const handleFiltered = (event) => {
@@ -76,11 +86,18 @@ export default function Phonebook() {
 
   const handleDelete = (person) => {
     if (window.confirm(`Delete ${person.name}`)) {
-      setPersons(
-        persons.filter((p) => {
-          return p.name !== person.name;
+      axios
+        .delete(`${baseUrl}/${person.id}`)
+        .then((res) => {
+          setPersons(
+            persons.filter((p) => {
+              return p.name !== res.data.name;
+            })
+          );
         })
-      );
+        .catch((error) => {
+          setShowError(person.name);
+        });
     }
   };
 
@@ -91,6 +108,14 @@ export default function Phonebook() {
       {showSucceed ? (
         <div className="bg-gray-200 border-green-600 border-4 text-green-600 p-1">
           Added {showSucceed.name}
+        </div>
+      ) : (
+        <></>
+      )}
+
+      {showError ? (
+        <div className="bg-gray-200 border-red-600 border-4 text-red-600 p-1">
+          Information of {showError} has already been removed from server
         </div>
       ) : (
         <></>
