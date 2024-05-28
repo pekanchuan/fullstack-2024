@@ -1,0 +1,25 @@
+GET http://localhost:3003/api/blogs HTTP/1.1
+
+###
+
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "The Nonprofit Industrial Complex and the Corruption of the American City",
+    "author": "Jonathan Ireland",
+    "url": "https://americanaffairsjournal.org/2024/05/the-nonprofit-industrial-complex-and-the-corruption-of-the-american-city/",
+    "likes": 0
+}
+
+###
+
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization",
+    "author": "Boshi Wang, Xiang Yue, Yu Su, Huan Sun",
+    "url": "https://arxiv.org/abs/2405.15071",
+    "likes": 94
+}
