@@ -26,3 +26,38 @@ describe("total likes", () => {
     assert.strictEqual(result, 5);
   });
 });
+
+describe("favorite blod", () => {
+  const blogs = [
+    {
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+      likes: 5,
+    },
+    {
+      title: "Go To Statement",
+      author: "Edsger W. Dijkstra",
+      url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+      likes: 15,
+    },
+    {
+      title: "Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+      likes: 25,
+    },
+  ];
+
+  const expected = {
+    title: "Considered Harmful",
+    author: "Edsger W. Dijkstra",
+    url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+    likes: 25,
+  };
+
+  test("find favorite blog", () => {
+    const result = listHelper.favoriteBlog(blogs);
+    assert.deepStrictEqual(result, expected);
+  });
+});
