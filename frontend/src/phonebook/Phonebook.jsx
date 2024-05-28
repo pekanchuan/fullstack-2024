@@ -6,7 +6,7 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 
-const baseUrl = "http://localhost:3001/persons";
+const baseUrl = "https://fullstack-2024-backend.onrender.com/api/persons";
 
 export default function Phonebook() {
   const [persons, setPersons] = useState([]);
