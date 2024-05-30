@@ -1,3 +1,5 @@
+const lodash = require("lodash");
+
 const dummy = (blogs) => {
   return 1;
 };
@@ -15,8 +17,11 @@ const favoriteBlog = (blogs) => {
   return blogs.find((blog) => blog.likes === maxLikes);
 };
 
+const mostBlogs = (blogs) => {};
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
+  mostBlogs,
 };
