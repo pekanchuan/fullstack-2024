@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
+import { useField } from "./hooks";
 
 const Menu = () => {
   const padding = {
@@ -178,6 +179,8 @@ const App = () => {
 
   const match = useMatch("/anecdotes/:id");
   const anecdote = match ? anecdoteById(Number(match.params.id)) : null;
+
+  const username = useField("text");
 
   return (
     <div>
